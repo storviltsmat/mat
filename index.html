@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veckomeny Slumpare</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
+    h1 { text-align: center; }
+    button { display: block; margin: 20px auto; padding: 10px 20px; font-size: 16px; }
+    .menu { max-width: 400px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px #ccc; }
+    .day { margin-bottom: 10px; }
+    .day strong { display: inline-block; width: 100px; }
+  </style>
+</head>
+<body>
+  <h1>Veckomeny Slumpare</h1>
+  <button onclick="generateMenu()">Slumpa meny</button>
+  <div class="menu" id="menu"></div>
+
+  <script>
+    const recipes = {
+      kott: ["Köttfärssås", "Hamburgare", "Pannbiff", "Kalops", "Taco Birria"],
+      fisk: ["Panerad torsk", "Fiskgratäng", "Fiskpinnar", "Panerad fisk"],
+      kyckling: ["Kyckling i curry", "Kycklinggryta", "Kyckling i sötsur sås"],
+      pasta: ["Pasta carbonara", "Lasagne", "Fläskfilepasta", "Spagetti med köttfärssås"],
+      korv: ["Korv stroganoff", "Falukorv i ugn", "Korv med pestopasta"],
+      vegetarisk: ["Grönsakssoppa", "Halloumistroganoff", "Ost och skinkpaj"],
+      soppa: ["Soppa med pannkaka", "Potatis- och purjolökssoppa"]
+    };
+
+    function randomFrom(list) {
+      return list[Math.floor(Math.random() * list.length)];
+    }
+
+    function generateMenu() {
+      const menu = [];
+      menu.push(["Måndag", randomFrom(recipes.kott)]);
+      menu.push(["Tisdag", randomFrom(recipes.fisk)]);
+      menu.push(["Onsdag", randomFrom(recipes.kyckling)]);
+      const isSoupDay = Math.random() < 0.5;
+      menu.push(["Torsdag", isSoupDay ? randomFrom(recipes.soppa) : randomFrom(recipes.pasta)]);
+      menu.push(["Fredag", randomFrom(recipes.korv)]);
+      menu.push(["Lördag", randomFrom(recipes.vegetarisk)]);
+      menu.push(["Söndag", randomFrom(recipes.kott)]);
+
+      const menuDiv = document.getElementById("menu");
+      menuDiv.innerHTML = "";
+      menu.forEach(([day, dish]) => {
+        menuDiv.innerHTML += `<div class="day"><strong>${day}:</strong> ${dish}</div>`;
+      });
+    }
+  </script>
+</body>
+</html>
