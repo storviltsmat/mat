@@ -1,26 +1,42 @@
-
 <!DOCTYPE html>
 <html lang="sv">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Veckomeny</title>
+  <title>Veckomeny Slumpare</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
-    h1 { text-align: center; }
-    button { display: block; margin: 20px auto; padding: 10px 20px; font-size: 16px; }
-    .menu { max-width: 400px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px #ccc; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-image: url('https://thatsup.website/storage/310/28253/responsive-images/FUJI8774___media_library_original_1147_765.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+    h1 { text-align: center; color: #fff; text-shadow: 1px 1px 2px #000; }
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #ffffffcc;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .menu {
+      max-width: 400px;
+      margin: auto;
+      background: #ffffffdd;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #333;
+    }
     .day { margin-bottom: 10px; }
     .day strong { display: inline-block; width: 100px; }
   </style>
 </head>
-  body {
-  background-image: url ('https://thatsup.website/storage/310/28253/responsive-images/FUJI8774___media_library_original_1147_765.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
- <body>
+<body>
   <h1>Veckomeny Slumpare</h1>
   <button onclick="generateMenu()">Slumpa meny</button>
   <div class="menu" id="menu"></div>
