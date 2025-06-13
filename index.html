@@ -34,12 +34,29 @@
     }
     .day { margin-bottom: 10px; }
     .day strong { display: inline-block; width: 100px; }
+    .email-section {
+      max-width: 400px;
+      margin: 20px auto;
+      text-align: center;
+    }
+    input[type="email"] {
+      padding: 8px;
+      width: 80%;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
   </style>
 </head>
 <body>
   <h1>Veckomeny Slumpare</h1>
   <button onclick="generateMenu()">Slumpa meny</button>
   <div class="menu" id="menu"></div>
+
+  <div class="email-section">
+    <input type="email" id="email" placeholder="Skriv din e-postadress" />
+    <button onclick="sendEmail()">Skicka meny till e-post</button>
+  </div>
 
   <script>
     const recipes = {
@@ -52,26 +69,45 @@
       soppa: ["Soppa med pannkaka", "Potatis- och purjolökssoppa"]
     };
 
+    let currentMenu = [];
+
     function randomFrom(list) {
       return list[Math.floor(Math.random() * list.length)];
     }
 
     function generateMenu() {
-      const menu = [];
-      menu.push(["Måndag", randomFrom(recipes.kott)]);
-      menu.push(["Tisdag", randomFrom(recipes.fisk)]);
-      menu.push(["Onsdag", randomFrom(recipes.kyckling)]);
+      currentMenu = [];
+      currentMenu.push(["Måndag", randomFrom(recipes.kott)]);
+      currentMenu.push(["Tisdag", randomFrom(recipes.fisk)]);
+      currentMenu.push(["Onsdag", randomFrom(recipes.kyckling)]);
       const isSoupDay = Math.random() < 0.5;
-      menu.push(["Torsdag", isSoupDay ? randomFrom(recipes.soppa) : randomFrom(recipes.pasta)]);
-      menu.push(["Fredag", randomFrom(recipes.korv)]);
-      menu.push(["Lördag", randomFrom(recipes.vegetarisk)]);
-      menu.push(["Söndag", randomFrom(recipes.kott)]);
+      currentMenu.push(["Torsdag", isSoupDay ? randomFrom(recipes.soppa) : randomFrom(recipes.pasta)]);
+      currentMenu.push(["Fredag", randomFrom(recipes.korv)]);
+      currentMenu.push(["Lördag", randomFrom(recipes.vegetarisk)]);
+      currentMenu.push(["Söndag", randomFrom(recipes.kott)]);
 
       const menuDiv = document.getElementById("menu");
       menuDiv.innerHTML = "";
-      menu.forEach(([day, dish]) => {
-        menuDiv.innerHTML += `<div class="day"><strong>${day}:</strong> ${dish}</div>`;
+      currentMenu.forEach(([day, dish]) => {
+        menuDiv.innerHTML += `<div class=\"day\"><strong>${day}:</strong> ${dish}</div>`;
       });
+    }
+
+    function sendEmail() {
+      const email = document.getElementById("email").value;
+      if (!email) {
+        alert("Fyll i en e-postadress först.");
+        return;
+      }
+      if (currentMenu.length === 0) {
+        alert("Du måste slumpa en meny först.");
+        return;
+      }
+      let body = "Här är din slumpade veckomeny:%0D%0A%0D%0A";
+      currentMenu.forEach(([day, dish]) => {
+        body += `${day}: ${dish}%0D%0A`;
+      });
+      window.location.href = `mailto:${email}?subject=Veckomeny&body=${body}`;
     }
   </script>
 </body>
