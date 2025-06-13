@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Veckomeny Slumpare</title>
+  <title>Veckomeny </title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -39,7 +39,7 @@
       padding: 5px;
       font-size: 16px;
     }
-    .add-recipe-section {
+    .add-recipe-section, .copy-section {
       max-width: 500px;
       margin: 20px auto;
       text-align: center;
@@ -51,12 +51,26 @@
       border: 1px solid #ccc;
       border-radius: 5px;
     }
+    #copyOutput {
+      white-space: pre-wrap;
+      background: #fff;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
   <h1>Veckomeny Slumpare</h1>
   <button onclick="generateMenu()">Slumpa meny</button>
   <div class="menu" id="menu"></div>
+
+  <div class="copy-section">
+    <button onclick="copyMenu()">Kopiera meny</button>
+    <div id="copyOutput"></div>
+  </div>
 
   <div class="add-recipe-section">
     <input type="text" id="newRecipe" placeholder="Ny maträtt (t.ex. Chili sin carne)" />
@@ -119,6 +133,20 @@
         container.innerHTML = `<strong>${day}:</strong>`;
         container.appendChild(select);
         menuDiv.appendChild(container);
+      });
+    }
+
+    function copyMenu() {
+      if (currentMenu.length === 0) {
+        alert("Du måste först slumpa fram en meny.");
+        return;
+      }
+      let text = "Veckomeny:\n\n";
+      currentMenu.forEach(([day, dish]) => {
+        text += `${day}: ${dish}\n`;
+      });
+      navigator.clipboard.writeText(text).then(() => {
+        document.getElementById("copyOutput").textContent = "Menyn har kopierats till urklipp! Klistra in i ett e-postmeddelande.";
       });
     }
 
