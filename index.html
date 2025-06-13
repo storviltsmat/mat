@@ -113,26 +113,18 @@
       renderMenu();
     }
 
-    function renderMenu() {
-      const menuDiv = document.getElementById("menu");
-      const allDishes = getAllDishes();
-      menuDiv.innerHTML = "";
-      currentMenu.forEach(([day, dish], index) => {
-        const select = document.createElement("select");
-        allDishes.forEach(d => {
-          const option = document.createElement("option");
-          option.value = d;
-          option.textContent = d;
-          if (d === dish) option.selected = true;
-          select.appendChild(option);
-        });
-        select.onchange = () => currentMenu[index][1] = select.value;
-
-        const container = document.createElement("div");
-        container.className = "day";
-        container.innerHTML = `<strong>${day}:</strong>`;
-        container.appendChild(select);
-        menuDiv.appendChild(container);
+    function renderMenu() {$1
+        const saveButton = document.createElement("button");
+        saveButton.textContent = "Spara";
+        saveButton.style.marginLeft = "10px";
+        saveButton.onclick = () => {
+          const selectedDish = select.value;
+          const counts = JSON.parse(localStorage.getItem("dishCounts") || '{}');
+          counts[selectedDish] = (counts[selectedDish] || 0) + 1;
+          localStorage.setItem("dishCounts", JSON.stringify(counts));
+          alert(`Du har nu ätit \"${selectedDish}\" ${counts[selectedDish]} gång(er).`);
+        };
+        container.appendChild(saveButton);
       });
     }
 
